@@ -220,6 +220,8 @@ function clearCart() {
  */
 function calculateTotalRevenue(orders) {
   // 請實作此函式
+  return orders.filter(order=>order.paid).reduce((acc,cur) => acc + cur.total,0)
+
 }
 
 /**
@@ -230,6 +232,7 @@ function calculateTotalRevenue(orders) {
  */
 function filterOrdersByStatus(orders, isPaid) {
   // 請實作此函式
+  return orders.filter(order=>order.paid === isPaid)
 }
 
 /**
@@ -246,6 +249,14 @@ function filterOrdersByStatus(orders, isPaid) {
  */
 function generateOrderReport(orders) {
   // 請實作此函式
+  
+  return {
+    totalOrders: orders.length,
+    paidOrders: filterOrdersByStatus(orders, true).length,
+    unpaidOrders: filterOrdersByStatus(orders, false).length,
+    totalRevenue: calculateTotalRevenue(orders),
+    averageOrderValue: calculateTotalRevenue(orders) / orders.length,
+  }
 }
 
 /**
@@ -259,6 +270,11 @@ function generateOrderReport(orders) {
  */
 function groupOrdersByPayment(orders) {
   // 請實作此函式
+  return orders.reduce((result,order)=>{
+    const payment = order.user.payment;
+    (result[payment] ||= []).push(order)
+    return result
+  },{})
 }
 
 // ========================================
