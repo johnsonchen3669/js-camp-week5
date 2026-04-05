@@ -79,7 +79,7 @@ function getProductsByCategory(products, category) {
  */
 function getDiscountRate(product) {
   // 請實作此函式 
-  return Math.round((product.price / product.origin_price) * 100) / 10
+  return `${Math.round((product.price / product.origin_price) * 100) / 10}折`
 }
 
 /**
