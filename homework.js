@@ -57,6 +57,7 @@ const orders = [
  */
 function getProductById(products, productId) {
   // 請實作此函式
+  return products.find(product => product.id === productId) || null;
 }
 
 /**
@@ -67,6 +68,7 @@ function getProductById(products, productId) {
  */
 function getProductsByCategory(products, category) {
   // 請實作此函式
+  return category === '全部' ? products : products.filter(product => product.category === category);
 }
 
 /**
@@ -76,7 +78,8 @@ function getProductsByCategory(products, category) {
  * 計算方式：Math.round((price / origin_price) * 100) / 10
  */
 function getDiscountRate(product) {
-  // 請實作此函式
+  // 請實作此函式 
+  return Math.round((product.price / product.origin_price) * 100) / 10
 }
 
 /**
@@ -86,6 +89,7 @@ function getDiscountRate(product) {
  */
 function getAllCategories(products) {
   // 請實作此函式
+  return [...new Set(products.map(product => product.category))]
 }
 
 // ========================================
