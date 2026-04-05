@@ -164,11 +164,10 @@ function addToCart(carts, product, quantity) {
   const cartIdx = carts.findIndex(cart => cart.product.id === product.id);
 
   if(cartIdx !==-1){
-    return carts.map((cart,index)=>index !== cartIdx ? cart : { ...cart, quantity: cart.quantity + quantity})
+    return carts.map((cart,index) => index !== cartIdx ? cart : { ...cart, quantity: cart.quantity + quantity})
   }
-  
-  const productIdx = products.findIndex(product => product.id === product.id);
-  return [...carts, { id: `cart-${carts.length + 1}`, product: products[productIdx],  quantity }]
+
+  return [...carts, { id: `cart-${carts.length + 1}`, product,  quantity }]
 
 }
 
@@ -183,9 +182,9 @@ function updateCartItemQuantity(carts, cartId, newQuantity) {
   const cartIdx = carts.findIndex(cart => cart.id === cartId)
   // 請實作此函式
   if(newQuantity<=0){
-   return carts.filter(cart => cart.id !== cartId);
+    return carts.filter(cart => cart.id !== cartId);
   }
-  return carts.map((cart,index)=>index !== cartIdx ? cart : { ...cart, quantity: cart.quantity + newQuantity})
+  return carts.map((cart,index)=>index !== cartIdx ? cart : { ...cart, quantity: newQuantity})
 }
 
 /**
@@ -196,7 +195,6 @@ function updateCartItemQuantity(carts, cartId, newQuantity) {
  */
 function removeFromCart(carts, cartId) {
   // 請實作此函式
-  const cartIdx = carts.findIndex(cart => cart.id === cartId)
   return carts.filter(cart => cart.id !== cartId);
 }
 
@@ -249,13 +247,12 @@ function filterOrdersByStatus(orders, isPaid) {
  */
 function generateOrderReport(orders) {
   // 請實作此函式
-  
   return {
     totalOrders: orders.length,
     paidOrders: filterOrdersByStatus(orders, true).length,
     unpaidOrders: filterOrdersByStatus(orders, false).length,
     totalRevenue: calculateTotalRevenue(orders),
-    averageOrderValue: calculateTotalRevenue(orders) / orders.length,
+    averageOrderValue: orders.reduce((acc,cur) => acc + cur.total,0) / orders.length,
   }
 }
 
